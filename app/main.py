@@ -36,7 +36,7 @@ h = Histogram('http_requests_milliseconds', 'Duration of HTTP requests in millis
 
 @app.get("/sum1n/{x}") #{x} variable
 async def read_item(x: int): #x: int   - states that our variable should be integere
-    c.labels(method='get', endpoint='/sum1n').inc
+    c.labels(method='get', endpoint='/sum1n').inc()
     h.labels(method='get', endpoint='/sum1n').time()
     sum = 0
     i = 0
@@ -47,7 +47,7 @@ async def read_item(x: int): #x: int   - states that our variable should be inte
 
 @app.get("/fibo")
 async def fibo(n: int):      #?n=   --- states that our variable n equal to, and it is interger
-    c.labels(method='get', endpoint='/fibo').inc
+    c.labels(method='get', endpoint='/fibo').inc()
     h.labels(method='get', endpoint='/fibo').time()
     fib=[]
     fib.append(0)
@@ -62,7 +62,7 @@ async def fibo(n: int):      #?n=   --- states that our variable n equal to, and
 
 @app.post("/reverse")
 async def reverse(string: str = Header(default=None)):     #"string" is a key from URL, str goes for string, header was imported 
-     c.labels(method='post', endpoint='/reverse').inc
+     c.labels(method='post', endpoint='/reverse').inc()
      h.labels(method='get', endpoint='/reverse').time()
      new = ""
      for i in string:
@@ -75,21 +75,21 @@ arr=[]   #global array
 async def list(gv: item):   #gv=given data "key:value", item goes for Class where we have key "element"
     value=gv.element        #.element gives us "value" of key "element"
     arr.append(value)
-    c.labels(method='put', endpoint='/list').inc
+    c.labels(method='put', endpoint='/list').inc()
     h.labels(method='get', endpoint='/list').time()
     return  value
 
 @app.get("/list")
 async def list():
     gsize.set(len(arr))
-    c.labels(method='get', endpoint='/list').inc
+    c.labels(method='get', endpoint='/list').inc()
     h.labels(method='get', endpoint='/list').time()
     return {"result": arr}
 
 
 @app.post("/calculator")
 async def calculator(gv:item2): #gv -given value
-    c.labels(method='post', endpoint='/calculator').inc
+    c.labels(method='post', endpoint='/calculator').inc()
     h.labels(method='get', endpoint='/calculator').time()
     value=gv.expr
     x=value.split(",")
